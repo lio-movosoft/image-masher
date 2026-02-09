@@ -13,12 +13,12 @@ defmodule Masher.Listener do
   end
 
   @impl true
-  def handle_info({:mash_image, image_key, variants}, state) do
-    Logger.info("Received mash request for #{image_key}")
+  def handle_info({:mash_image, bucket, image_key, variants}, state) do
+    Logger.info("Received mash request for #{bucket}/#{image_key}")
 
     variants = Enum.map(variants, &Tuple.to_list/1)
 
-    case %{"image_key" => image_key, "variants" => variants}
+    case %{"bucket" => bucket, "image_key" => image_key, "variants" => variants}
          |> Masher.Workers.ProcessImage.new()
          |> Oban.insert() do
       {:ok, job} ->

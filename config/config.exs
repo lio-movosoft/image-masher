@@ -13,7 +13,7 @@ config :masher, Oban,
   queues: [images: 2]
 
 config :masher, :s3,
-  bucket: "recipe-images",
+  bucket: "media_repo",
   region: "us-east-1",
   host: "localhost",
   port: 9099,
