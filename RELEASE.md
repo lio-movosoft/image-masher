@@ -16,10 +16,6 @@ The key is both nodes need the same Erlang cookie and resolvable node names. On 
 ```bash
 # Masher (no web server, just the worker)
 DATABASE_URL="ecto://user:pass@localhost/masher_prod" \
-S3_BUCKET="recipe-images" \
-S3_HOST="your-s3-host" \
-S3_PORT="443" \
-S3_SCHEME="https://" \
 AWS_ACCESS_KEY_ID="..." \
 AWS_SECRET_ACCESS_KEY="..." \
 RELEASE_NODE="masher@127.0.0.1" \
