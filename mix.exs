@@ -30,7 +30,8 @@ defmodule Masher.MixProject do
       {:jason, "~> 1.4"},
       {:req, "~> 0.5"},
       {:ecto_sql, "~> 3.12"},
-      {:postgrex, "~> 0.19"}
+      {:postgrex, "~> 0.19"},
+      {:credo, "~> 1.7", only: [:dev, :test], runtime: false}
     ]
   end
 

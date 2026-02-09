@@ -2,6 +2,8 @@ defmodule Masher.Listener do
   @moduledoc false
   use GenServer
 
+  alias Masher.Workers.ProcessImage
+
   require Logger
 
   def start_link(_), do: GenServer.start_link(__MODULE__, nil, name: __MODULE__)
@@ -19,7 +21,7 @@ defmodule Masher.Listener do
     variants = Enum.map(variants, &Tuple.to_list/1)
 
     case %{"bucket" => bucket, "image_key" => image_key, "variants" => variants}
-         |> Masher.Workers.ProcessImage.new()
+         |> ProcessImage.new()
          |> Oban.insert() do
       {:ok, job} ->
         Logger.info("Enqueued job #{job.id} for #{image_key}")

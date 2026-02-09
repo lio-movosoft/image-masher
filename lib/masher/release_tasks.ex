@@ -1,4 +1,6 @@
 defmodule Masher.ReleaseTasks do
+  @moduledoc false
+
   @app :masher
   @repos Application.compile_env!(@app, :ecto_repos)
 
