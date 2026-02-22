@@ -1,20 +1,28 @@
 Here's how to set it up for production with HAProxy in front:
 
 Build releases
-bash
+
+```bash
 # Cookbook
 cd /path/to/cookbook
 MIX_ENV=prod mix assets.deploy
 MIX_ENV=prod mix release
+```
 
 # Masher
+
+```
 cd /path/to/masher
 MIX_ENV=prod mix release
-Start them
+```
+
+Start them.
+
 The key is both nodes need the same Erlang cookie and resolvable node names. On a single host:
 
 ```bash
 # Masher (no web server, just the worker)
+# Database access is required for Oban
 DATABASE_URL="ecto://user:pass@localhost/masher_prod" \
 AWS_ACCESS_KEY_ID="..." \
 AWS_SECRET_ACCESS_KEY="..." \

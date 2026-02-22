@@ -1,5 +1,15 @@
 defmodule Masher.Listener do
-  @moduledoc false
+  @moduledoc """
+  Listens for image processing requests from client apps (Cookbook, Nota, etc.).
+
+  Clients connect to this node using hidden Erlang distribution
+  (`hidden_connect_node/1`) and send mash requests directly:
+
+      send({Masher.Listener, masher_node}, {:mash_image, bucket, image_key, variants})
+
+  Masher enqueues an Oban job and, upon completion, sends the result directly to
+  `:masher_result_listener` on each connected hidden node.
+  """
   use GenServer
 
   alias Masher.Workers.ProcessImage
@@ -9,10 +19,7 @@ defmodule Masher.Listener do
   def start_link(_), do: GenServer.start_link(__MODULE__, nil, name: __MODULE__)
 
   @impl true
-  def init(_) do
-    Phoenix.PubSub.subscribe(:masher_pubsub, "mash_requests")
-    {:ok, nil}
-  end
+  def init(_), do: {:ok, nil}
 
   @impl true
   def handle_info({:mash_image, bucket, image_key, variants}, state) do

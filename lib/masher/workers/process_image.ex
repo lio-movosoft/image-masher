@@ -28,8 +28,9 @@ defmodule Masher.Workers.ProcessImage do
 
     Masher.S3.delete(bucket, key)
 
-    Phoenix.PubSub.broadcast(:masher_pubsub, "image_results",
-      {:image_mashed, key, variant_keys})
+    for node <- Node.list(:hidden) do
+      send({:masher_result_listener, node}, {:image_mashed, key, variant_keys})
+    end
 
     Logger.info("Completed processing #{bucket}/#{key}")
 

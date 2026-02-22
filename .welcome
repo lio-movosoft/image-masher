@@ -1,0 +1,3 @@
+run  with [31m
+iex --sname masher@localhost --cookie masher_secret -S mix
+[0m
